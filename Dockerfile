@@ -10,11 +10,11 @@ WORKDIR /app
 # package.json과 package-lock.json 파일 복사
 COPY package.json package-lock.json ./
 # 인터넷 느릴때 미리 복사
-COPY node_modules ./node_modules
+#COPY node_modules ./node_modules
 # npm 의존성 설치
-#RUN npm ci
+RUN npm ci
 # Next.js 캐시 삭제
-#RUN rm -rf ./.next/cache
+RUN rm -rf ./.next/cache
 
 # builder 스테이지: 소스 코드 빌드를 위한 단계 (의존성 설치 캐싱을 위해)
 FROM base AS builder
