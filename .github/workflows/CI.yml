@@ -28,8 +28,23 @@ jobs:
         run: |
           ls -al
           docker ps -a
+          echo ${{ vars.REPO_URL }}
+          echo ${{ vars.CONTAINER_NAME }}
 
-      - name: Docker Setting Check
+      # Tag : YYMMDD
+      - name: Pre-Enviroment Check - DeployTag Setting
         run: |
-          docker buildx build --tag 172.28.128.142:32000/poc-stablecoin-user-pub:latest . --push
+          echo "DeplyTag=$(date '+%y%m%d')" >> $GITHUB_ENV
+          
+      - name: Env Setting Check
+        run: |
+          echo ${{ env.DeplyTag }}
+                
+      - name: Docker Image Build & Tag
+        run: |
+          docker build -t ${{ vars.REPO_URL }}/${{ vars.CONTAINER_NAME }}:${{ env.DeplyTag }} .
+          docker tag ${{ vars.REPO_URL }}/${ContainerNm}:${{ env.DeplyTag }} ${{ vars.REPO_URL }}/${ContainerNm}:latest
 
+      - name: Docker Image Push
+        run: |          
+          docker push ${{ vars.REPO_URL }}/${ContainerNm}:latest
