@@ -41,4 +41,4 @@ jobs:
 
       - name: Docker Image Push
         run: |          
-          docker push ${{ vars.REPO_URL }}/${ContainerNm}:latest
+          docker push ${{ vars.REPO_URL }}/${{ vars.CONTAINER_NAME }}:latest
