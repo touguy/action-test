@@ -32,7 +32,7 @@ jobs:
       # Tag : YYMMDD
       - name: Pre-Enviroment Check - DeployTag Setting
         run: |
-          echo "DeplyTag=$(date '+%y%m%d')" >> $GITHUB_ENV
+          echo "DeplyTag=$(date '+%y%m%d%H%M%S')" >> $GITHUB_ENV
 
       - name: Docker Image Build & Tag
         run: |
