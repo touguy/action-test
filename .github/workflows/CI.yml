@@ -28,22 +28,16 @@ jobs:
         run: |
           ls -al
           docker ps -a
-          echo ${{ vars.REPO_URL }}
-          echo ${{ vars.CONTAINER_NAME }}
 
       # Tag : YYMMDD
       - name: Pre-Enviroment Check - DeployTag Setting
         run: |
           echo "DeplyTag=$(date '+%y%m%d')" >> $GITHUB_ENV
-          
-      - name: Env Setting Check
-        run: |
-          echo ${{ env.DeplyTag }}
-                
+
       - name: Docker Image Build & Tag
         run: |
-          docker build -t ${{ vars.REPO_URL }}/${{ vars.CONTAINER_NAME }}:${{ env.DeplyTag }} .
-          docker tag ${{ vars.REPO_URL }}/${ContainerNm}:${{ env.DeplyTag }} ${{ vars.REPO_URL }}/${ContainerNm}:latest
+          docker buildx build -t ${{ vars.REPO_URL }}/${{ vars.CONTAINER_NAME }}:${{ env.DeplyTag }} .
+          docker tag ${{ vars.REPO_URL }}/${{ vars.CONTAINER_NAME }}:${{ env.DeplyTag }}  ${{ vars.REPO_URL }}/${{ vars.CONTAINER_NAME }}:latest
 
       - name: Docker Image Push
         run: |          
